@@ -8,13 +8,23 @@ namespace ClassLibrary1
 {
     public class BookListService
     {
+        /// <summary>
+        /// Book list
+        /// </summary>
         private List<Book> bookStore;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public BookListService()
         {
             bookStore = new List<Book>();
         }
 
+        /// <summary>
+        /// Add book
+        /// </summary>
+        /// <param name="book">Book</param>
         public void AddBook(Book book)
         {
             if (book == null)
@@ -24,6 +34,10 @@ namespace ClassLibrary1
             bookStore.Add(book);
         }
 
+        /// <summary>
+        /// Remove book
+        /// </summary>
+        /// <param name="book">Book</param>
         public void RemoveBook(Book book)
         {
             if (book == null)
@@ -36,6 +50,11 @@ namespace ClassLibrary1
             }
         }
 
+        /// <summary>
+        /// Find book by tag
+        /// </summary>
+        /// <param name="tag">Tag</param>
+        /// <returns>Target book</returns>
         public Book FindBookByTag(IFindBook tag)
         {
             if (tag == null)
@@ -52,6 +71,10 @@ namespace ClassLibrary1
             return null;
         }
 
+        /// <summary>
+        /// Sort books by tag
+        /// </summary>
+        /// <param name="tag">Tag</param>
         public void SortBooksByTag(IComparer<Book> tag)
         {
             if (tag == null)
@@ -61,11 +84,19 @@ namespace ClassLibrary1
             bookStore.Sort(tag);
         }
 
+        /// <summary>
+        /// Save data
+        /// </summary>
+        /// <param name="store">Store</param>
         public void Save(IStorageBook store)
         {
             store.Save(bookStore);
         }
 
+        /// <summary>
+        /// Load data
+        /// </summary>
+        /// <param name="store">Store</param>
         public void Load(IStorageBook store)
         {
             List<Book> books = store.Load();

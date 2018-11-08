@@ -9,8 +9,15 @@ namespace Account
 {
     public class FileWorker : IStorageAccount
     {
+        /// <summary>
+        /// File path
+        /// </summary>
         private string path;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="paths">Paths</param>
         public FileWorker(string paths)
         {
             path = paths ?? throw new ArgumentNullException();
@@ -20,6 +27,10 @@ namespace Account
             }
         }
 
+        /// <summary>
+        /// Load data
+        /// </summary>
+        /// <returns>Data list</returns>
         public List<BankAccount> Load()
         {
             List<BankAccount> acc = new List<BankAccount>();
@@ -48,6 +59,10 @@ namespace Account
             return acc;
         }
 
+        /// <summary>
+        /// Save data
+        /// </summary>
+        /// <param name="books">List of books</param>
         public void Save(List<BankAccount> books)
         {
             using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Open)))

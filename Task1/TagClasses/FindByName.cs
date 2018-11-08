@@ -10,10 +10,21 @@ namespace TagClasses
     public class FindByName : IFindBook
     {
         private string name;
+
+        /// <summary>
+        /// Find book by name
+        /// </summary>
+        /// <param name="name"></param>
         public FindByName(string name)
         {
             this.name = name ?? throw new ArgumentNullException();
         }
+
+        /// <summary>
+        /// Contain
+        /// </summary>
+        /// <param name="book"></param>
+        /// <returns></returns>
         public bool Contain(Book book)
         {
             if (book == null)

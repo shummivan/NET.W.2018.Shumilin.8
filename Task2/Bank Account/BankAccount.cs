@@ -8,6 +8,7 @@ namespace Account
 {
     public class BankAccount
     {
+        #region Fields
         private int id;
         private string firstName;
         private string lastName;
@@ -15,7 +16,9 @@ namespace Account
         private int bonus;
         private AccountGradation gradation;
         private AccountStatus status;
+        #endregion
 
+        #region Enums
         public enum AccountGradation
         {
             Base,
@@ -27,7 +30,9 @@ namespace Account
             Active,
             Closed
         }
+        #endregion
 
+        #region Properties
         public int Id
         {
             get => id;
@@ -87,7 +92,9 @@ namespace Account
         }
         public AccountGradation Gradation { get; set; }
         public AccountStatus Status { get; set; }
+        #endregion
 
+        #region Constructor
         public BankAccount(int id, string firstName, string lastName, decimal amount, int bonus, AccountGradation gradation, AccountStatus status)
         {
             Id = id;
@@ -98,6 +105,7 @@ namespace Account
             Gradation = gradation;
             Status = status;
         }
+        #endregion
 
         public override string ToString()
         {

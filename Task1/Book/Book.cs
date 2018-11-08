@@ -8,6 +8,7 @@ namespace ClassLibrary1
 {
     public class Book : IComparable, IComparable<Book>, IEquatable<Book>
     {
+        #region Fields
         private string isbn;
         private string author;
         private string name;
@@ -15,7 +16,9 @@ namespace ClassLibrary1
         private string year;
         private int pages;
         private int price;
+        #endregion
 
+        #region Enums
         public string ISBN
         {
             get => isbn;
@@ -100,7 +103,19 @@ namespace ClassLibrary1
                 price = value;
             }
         }
+        #endregion
 
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="isbn">isbn</param>
+        /// <param name="author">author</param>
+        /// <param name="name">name</param>
+        /// <param name="publishing">publishing</param>
+        /// <param name="year">year</param>
+        /// <param name="pages">pages</param>
+        /// <param name="price">price</param>
         public Book(string isbn, string author, string name, string publishing, string year, int pages, int price)
         {
             ISBN = isbn;
@@ -111,7 +126,15 @@ namespace ClassLibrary1
             Pages = pages;
             Price = price;
         }
+        #endregion
 
+        #region Public methods
+
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="obj">Object</param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -125,6 +148,10 @@ namespace ClassLibrary1
             }        
         }
 
+        /// <summary>
+        /// Get hash code
+        /// </summary>
+        /// <returns>Hash code of book</returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -135,11 +162,23 @@ namespace ClassLibrary1
             return $" ISBN: {ISBN}\n Author: {Author}\n Name: {Name}\n Publishing: {Publishing}\n Year: {Year}\n Pages: {Pages}\n Price: {Price}";
         }
 
+        /// <summary>
+        /// Compare 2 book
+        /// </summary>
+        /// <param name="book1"></param>
+        /// <param name="book2"></param>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
         public static int Compare(Book book1, Book book2, IComparer<Book> comparer)
         {
             return comparer.Compare(book1, book2);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public int CompareTo(object obj)
         {
             if (obj == null)
@@ -157,6 +196,11 @@ namespace ClassLibrary1
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public int CompareTo(Book other)
         {
             if (other == null)
@@ -167,6 +211,11 @@ namespace ClassLibrary1
             return Name.CompareTo(other.Name);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Equals(Book other)
         {
             if (other == null)
@@ -175,5 +224,6 @@ namespace ClassLibrary1
             }
             return isbn.Equals(other.isbn) && name.Equals(other.name) && author.Equals(other.author) && publishing.Equals(other.publishing) && year.Equals(other.year) && pages.Equals(other.pages) && price.Equals(other.price);
         }
+        #endregion
     }
 }

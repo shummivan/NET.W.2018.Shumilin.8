@@ -9,8 +9,15 @@ namespace ClassLibrary1
 {
     public class FileWorker : IStorageBook
     {
+        /// <summary>
+        /// Path
+        /// </summary>
         private string path;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="paths"></param>
         public FileWorker(string paths)
         {
             path = paths ?? throw new ArgumentNullException();
@@ -20,6 +27,10 @@ namespace ClassLibrary1
             }
         }
 
+        /// <summary>
+        /// Load data
+        /// </summary>
+        /// <returns>List of books</returns>
         public List<Book> Load()
         {
             List<Book> books = new List<Book>();
@@ -48,6 +59,10 @@ namespace ClassLibrary1
             return books;
         }
 
+        /// <summary>
+        /// Save data
+        /// </summary>
+        /// <param name="books">List of books</param>
         public void Save(List<Book> books)
         {
             using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Open)))
