@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassLibrary1
+namespace Books
 {
-    public class Book : IComparable, IComparable<Book>, IEquatable<Book>
+    public class BookDemo : IComparable, IComparable<BookDemo>, IEquatable<BookDemo>
     {
         #region Fields
         private string isbn;
@@ -18,7 +19,10 @@ namespace ClassLibrary1
         private int price;
         #endregion
 
-        #region Enums
+        #region Properties
+        /// <summary>
+        /// ISBN of book
+        /// </summary>
         public string ISBN
         {
             get => isbn;
@@ -26,11 +30,15 @@ namespace ClassLibrary1
             {
                 if (String.IsNullOrEmpty(value))
                 {
-                    throw new Exception();
+                    throw new ArgumentNullException();
                 }
                 isbn = value;
             }
         }
+
+        /// <summary>
+        /// Author of book
+        /// </summary>
         public string Author
         {
             get => author;
@@ -38,11 +46,15 @@ namespace ClassLibrary1
             {
                 if (String.IsNullOrEmpty(value))
                 {
-                    throw new Exception();
+                    throw new ArgumentNullException();
                 }
                 author = value;
             }
         }
+
+        /// <summary>
+        /// Name of book
+        /// </summary>
         public string Name
         {
             get => name;
@@ -50,35 +62,47 @@ namespace ClassLibrary1
             {
                 if (String.IsNullOrEmpty(value))
                 {
-                    throw new Exception();
+                    throw new ArgumentNullException();
                 }
                 name = value;
             }
         }
+
+        /// <summary>
+        /// Publishing house of book
+        /// </summary>
         public string Publishing
         {
-            get => publishing;            
+            get => publishing;
             set
             {
                 if (String.IsNullOrEmpty(value))
                 {
-                    throw new Exception();
+                    throw new ArgumentNullException();
                 }
                 publishing = value;
             }
         }
+
+        /// <summary>
+        /// Year of book
+        /// </summary>
         public string Year
         {
             get => year;
             set
             {
-                if(String.IsNullOrEmpty(value))
+                if (String.IsNullOrEmpty(value))
                 {
-                    throw new Exception();
+                    throw new ArgumentNullException();
                 }
                 year = value;
             }
         }
+
+        /// <summary>
+        /// Pages count of book
+        /// </summary>
         public int Pages
         {
             get => pages;
@@ -86,11 +110,15 @@ namespace ClassLibrary1
             {
                 if (value <= 0)
                 {
-                    throw new Exception("");
+                    throw new ArgumentOutOfRangeException();
                 }
                 pages = value;
             }
         }
+
+        /// <summary>
+        /// Price of book
+        /// </summary>
         public int Price
         {
             get => price;
@@ -98,7 +126,7 @@ namespace ClassLibrary1
             {
                 if (value <= 0)
                 {
-                    throw new Exception("");
+                    throw new ArgumentOutOfRangeException();
                 }
                 price = value;
             }
@@ -116,7 +144,7 @@ namespace ClassLibrary1
         /// <param name="year">year</param>
         /// <param name="pages">pages</param>
         /// <param name="price">price</param>
-        public Book(string isbn, string author, string name, string publishing, string year, int pages, int price)
+        public BookDemo(string isbn, string author, string name, string publishing, string year, int pages, int price)
         {
             ISBN = isbn;
             Author = author;
@@ -131,6 +159,55 @@ namespace ClassLibrary1
         #region Public methods
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return ToString("AT", null);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public string ToString(string format)
+        {
+            return ToString(format, CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// Formatting out string
+        /// </summary>
+        /// <param name="format">Format</param>
+        /// <param name="formatProvider">formatProvider</param>
+        /// <returns>Formatting string</returns>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrEmpty(format))
+            {
+                throw new ArgumentNullException();
+            }
+
+            switch (format.ToUpper())
+            {
+                case "ATYH":
+                    return $"{Author} {Name} {Year} {Publishing}";
+                case "ATY":
+                    return $"{Author} {Name} {Year}";
+                case "AT":
+                    return $"{Author} {Name}";
+                case "TYH":
+                    return $"{Name} {Year} {Publishing}";
+                case "T":
+                    return $"{Name}";
+                default:
+                    throw new Exception();
+            }
+        }
+
+        /// <summary>
         /// Equals
         /// </summary>
         /// <param name="obj">Object</param>
@@ -143,9 +220,9 @@ namespace ClassLibrary1
             }
             else
             {
-                Book book = (Book) obj;
+                BookDemo book = (BookDemo)obj;
                 return (isbn == book.isbn) && (name == book.name) && (author == book.author) && (publishing == book.publishing) && (year == book.year) && (pages == book.pages) && (price == book.price);
-            }        
+            }
         }
 
         /// <summary>
@@ -157,11 +234,6 @@ namespace ClassLibrary1
             return base.GetHashCode();
         }
 
-        public override string ToString()
-        {
-            return $" ISBN: {ISBN}\n Author: {Author}\n Name: {Name}\n Publishing: {Publishing}\n Year: {Year}\n Pages: {Pages}\n Price: {Price}";
-        }
-
         /// <summary>
         /// Compare 2 book
         /// </summary>
@@ -169,7 +241,7 @@ namespace ClassLibrary1
         /// <param name="book2"></param>
         /// <param name="comparer"></param>
         /// <returns></returns>
-        public static int Compare(Book book1, Book book2, IComparer<Book> comparer)
+        public static int Compare(BookDemo book1, BookDemo book2, IComparer<BookDemo> comparer)
         {
             return comparer.Compare(book1, book2);
         }
@@ -185,7 +257,7 @@ namespace ClassLibrary1
             {
                 return 1;
             }
-            Book book = obj as Book;
+            BookDemo book = obj as BookDemo;
             if (book != null)
             {
                 return Name.CompareTo(book.Name);
@@ -201,7 +273,7 @@ namespace ClassLibrary1
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(Book other)
+        public int CompareTo(BookDemo other)
         {
             if (other == null)
             {
@@ -216,7 +288,7 @@ namespace ClassLibrary1
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(Book other)
+        public bool Equals(BookDemo other)
         {
             if (other == null)
             {
