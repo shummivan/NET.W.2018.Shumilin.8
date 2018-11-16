@@ -4,11 +4,17 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
 
-namespace Books
+namespace ClassLibrary1
 {
     public class BookFormatExtension : IFormatProvider, ICustomFormatter
     {
+        /// <summary>
+        /// Logger
+        /// </summary>
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Custom formating of book
         /// </summary>
@@ -31,16 +37,16 @@ namespace Books
                 formatProvider = CultureInfo.CurrentCulture;
             }
 
-            BookDemo book = arg as BookDemo;
-
+            Book book = arg as Book;
+            logger.Info("Extension format info about book");
             switch (format.ToUpper())
             {
                 case "F":
-                    return $"{book.ISBN} {book.Author} {book.Name} {book.Publishing} {book.Year} {book.Pages} {book.Price}";
+                    return $"{book.Author} {book.Name} {book.Year} {book.Publishing}";
                 case "ATP":
                     return $"{book.Author} {book.Name} {book.Pages}";
                 case "P":
-                    return $"{book.Pages}";
+                    return $"{book.Author} {book.Pages}";
                 case "YH":
                     return $"{book.Year} {book.Publishing}";
                 default:

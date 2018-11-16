@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using ClassLibrary1;
 using TagClasses;
 
-
 namespace ConsoleApp
 {
     class Program
@@ -34,7 +33,6 @@ namespace ConsoleApp
             //bls.Save(fw);
 
             Console.WriteLine(Book.Compare(book1, book2, new CompareByAuthor()));
-
             var t = bls.FindBookByTag(new FindByAuthor("123"));
 
             Console.WriteLine(t);

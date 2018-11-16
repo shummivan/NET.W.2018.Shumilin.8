@@ -4,10 +4,11 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
 
-namespace Books
+namespace ClassLibrary1
 {
-    public class BookDemo : IComparable, IComparable<BookDemo>, IEquatable<BookDemo>
+    public class Book : IComparable, IComparable<Book>, IEquatable<Book>
     {
         #region Fields
         private string isbn;
@@ -17,6 +18,7 @@ namespace Books
         private string year;
         private int pages;
         private int price;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         #endregion
 
         #region Properties
@@ -73,7 +75,7 @@ namespace Books
         /// </summary>
         public string Publishing
         {
-            get => publishing;
+            get => publishing;            
             set
             {
                 if (String.IsNullOrEmpty(value))
@@ -92,7 +94,7 @@ namespace Books
             get => year;
             set
             {
-                if (String.IsNullOrEmpty(value))
+                if(String.IsNullOrEmpty(value))
                 {
                     throw new ArgumentNullException();
                 }
@@ -144,7 +146,7 @@ namespace Books
         /// <param name="year">year</param>
         /// <param name="pages">pages</param>
         /// <param name="price">price</param>
-        public BookDemo(string isbn, string author, string name, string publishing, string year, int pages, int price)
+        public Book(string isbn, string author, string name, string publishing, string year, int pages, int price)
         {
             ISBN = isbn;
             Author = author;
@@ -153,36 +155,24 @@ namespace Books
             Year = year;
             Pages = pages;
             Price = price;
+            logger.Info("Book instance was createвd");
         }
         #endregion
 
         #region Public methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public override string ToString()
         {
+            logger.Info("Default info about book");
             return ToString("AT", null);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="format"></param>
-        /// <returns></returns>
         public string ToString(string format)
         {
+            logger.Info("Format info about book");
             return ToString(format, CultureInfo.CurrentCulture);
         }
 
-        /// <summary>
-        /// Formatting out string
-        /// </summary>
-        /// <param name="format">Format</param>
-        /// <param name="formatProvider">formatProvider</param>
-        /// <returns>Formatting string</returns>
         public string ToString(string format, IFormatProvider formatProvider)
         {
             if (string.IsNullOrEmpty(format))
@@ -190,6 +180,7 @@ namespace Books
                 throw new ArgumentNullException();
             }
 
+            logger.Info("Different format info about book");
             switch (format.ToUpper())
             {
                 case "ATYH":
@@ -220,9 +211,9 @@ namespace Books
             }
             else
             {
-                BookDemo book = (BookDemo)obj;
+                Book book = (Book) obj;
                 return (isbn == book.isbn) && (name == book.name) && (author == book.author) && (publishing == book.publishing) && (year == book.year) && (pages == book.pages) && (price == book.price);
-            }
+            }        
         }
 
         /// <summary>
@@ -241,7 +232,7 @@ namespace Books
         /// <param name="book2"></param>
         /// <param name="comparer"></param>
         /// <returns></returns>
-        public static int Compare(BookDemo book1, BookDemo book2, IComparer<BookDemo> comparer)
+        public static int Compare(Book book1, Book book2, IComparer<Book> comparer)
         {
             return comparer.Compare(book1, book2);
         }
@@ -257,7 +248,7 @@ namespace Books
             {
                 return 1;
             }
-            BookDemo book = obj as BookDemo;
+            Book book = obj as Book;
             if (book != null)
             {
                 return Name.CompareTo(book.Name);
@@ -273,7 +264,7 @@ namespace Books
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(BookDemo other)
+        public int CompareTo(Book other)
         {
             if (other == null)
             {
@@ -288,7 +279,7 @@ namespace Books
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(BookDemo other)
+        public bool Equals(Book other)
         {
             if (other == null)
             {
